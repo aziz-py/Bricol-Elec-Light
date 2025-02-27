@@ -1,79 +1,29 @@
-/* Style général du site */
+
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-}
-
-header {
-  background-color: #4CAF50;
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
-
-header h1 {
-  font-size: 2.5em;
-}
-
-.lang-select {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-main {
-  padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
 }
 
 form {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    gap: 10px;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
-form label {
-  display: block;
-  margin: 10px 0 5px;
+button {
+    background: #007BFF;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-form input, form select, form button {
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-form button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #45a049;
-}
-
-#result {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#result p {
-  font-size: 1.2em;
-}
-
-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: #333;
-  color: white;
-  margin-top: 20px;
+button:hover {
+    background: #0056b3;
 }
