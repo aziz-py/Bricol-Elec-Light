@@ -1,54 +1,107 @@
-document.getElementById('lighting-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+function validateForm() {
+  // Récupérer les valeurs des dimensions
+  const hauteur = parseFloat(document.getElementById("hauteur").value);
+  const largeur = parseFloat(document.getElementById("largeur").value);
+  const longueur = parseFloat(document.getElementById("longueur").value);
 
-    // Get the form values
-    const room = document.getElementById('room').value;
-    const height = parseFloat(document.getElementById('height').value);
-    const width = parseFloat(document.getElementById('width').value);
-    const length = parseFloat(document.getElementById('length').value);
-    const lightingType = parseFloat(document.getElementById('lighting-type').value);
-    const spotColor = parseInt(document.getElementById('spot-color').value);
-    const spotPower = parseFloat(document.getElementById('spot-power').value);
+  let errorMessage = "";
 
-    // Calculate the surface area
-    const surface = width * length;
+  // Vérification que les dimensions sont supérieures à 1 mètre
+  if (hauteur <= 1) {
+    errorMessage += "La hauteur doit être supérieure à 1 mètre.\n";
+  }
+  if (largeur <= 1) {
+    errorMessage += "La largeur doit être supérieure à 1 mètre.\n";
+  }
+  if (longueur <= 1) {
+    errorMessage += "La longueur doit être supérieure à 1 mètre.\n";
+  }
 
-    if (surface < 1) {
-        alert("La surface de la pièce doit être supérieure à 1m² !");
-        return;
+  // Si des erreurs existent, afficher un message d'erreur
+  if (errorMessage) {
+    alert(errorMessage);
+    return false;  // Empêche la soumission du formulaire
+  }
+
+  // Vérification si la puissance est renseignée
+  let puissance = document.getElementById("puissance").value;
+  if (!puissance) {
+    // Si la puissance n'est pas renseignée, définir une puissance recommandée en fonction de la pièce
+    const piece = document.getElementById("piece").value;
+    switch (piece) {
+      case "Salon":
+        puissance = 15;  // Puissance recommandée pour le salon
+        break;
+      case "Chambre":
+        puissance = 10;  // Puissance recommandée pour la chambre
+        break;
+      case "Salle de bain":
+        puissance = 12;  // Puissance recommandée pour la salle de bain
+        break;
+      case "Cuisine":
+        puissance = 12;  // Puissance recommandée pour la cuisine
+        break;
+      case "Chambre de dressing":
+        puissance = 10;  // Puissance recommandée pour la chambre de dressing
+        break;
+      case "Couloir":
+        puissance = 8;   // Puissance recommandée pour le couloir
+        break;
+      case "Balcon":
+        puissance = 12;  // Puissance recommandée pour le balcon
+        break;
+      default:
+        puissance = 10;  // Puissance par défaut pour les autres pièces
     }
+  }
 
-    // Room lighting factor (adjust according to room type)
-    const roomFactors = {
-        1: 150, // Toilette
-        2: 200, // Salle de bain
-        3: 250, // Cuisine
-        4: 300, // Chambre à coucher
-        5: 350, // Salon
-        6: 400, // Salle à manger
-        7: 500, // Terrasse extérieure
-        8: 450, // Balcon
-        9: 100, // Couloir
-    };
+  // Calcul de la surface
+  const surface = largeur * longueur;
 
-    const factor = roomFactors[room] || 250;
+  // Calcul du nombre de spots
+  const lumensRequis = surface * getEclairageFactor(piece);  // getEclairageFactor() serait une fonction qui détermine le facteur en fonction de la pièce
+  const nombreSpots = Math.ceil(lumensRequis / (puissance * 80));  // Exemple d'efficacité lumineuse de 80 lumens par watt
 
-    // Lumens required for the room
-    const lumensRequired = surface * factor;
+  // Affichage des résultats
+  document.getElementById("resultat").innerHTML = `
+    Nombre de spots recommandés : ${nombreSpots} <br>
+    Surface de la pièce : ${surface} m² <br>
+    Puissance recommandée : ${puissance} W
+  `;
+  return false;
+}
 
-    // Calculate the number of spots needed
-    const efficiency = 80; // Assume 80 lumens per watt for the spot
-    const totalLumensPerSpot = spotPower * efficiency;
-    const numberOfSpots = Math.ceil(lumensRequired / totalLumensPerSpot);
+function getEclairageFactor(piece) {
+  switch (piece) {
+    case "Salon":
+      return 30;  // Facteur d'éclairage pour le salon
+    case "Chambre":
+      return 20;  // Facteur d'éclairage pour la chambre
+    case "Salle de bain":
+      return 35;  // Facteur d'éclairage pour la salle de bain
+    case "Cuisine":
+      return 30;  // Facteur d'éclairage pour la cuisine
+    case "Chambre de dressing":
+      return 25;  // Facteur d'éclairage pour la chambre de dressing
+    case "Couloir":
+      return 15;  // Facteur d'éclairage pour le couloir
+    case "Balcon":
+      return 30;  // Facteur d'éclairage pour le balcon
+    default:
+      return 25;  // Facteur d'éclairage par défaut
+  }
+}
 
-    // Display the result
-    document.getElementById('recommended-spots').textContent = `Nombre de spots recommandés : ${numberOfSpots}`;
-    
-    if (numberOfSpots <= 3) {
-        document.getElementById('lighting-message').textContent = "L'éclairage peut être insuffisant pour cette pièce.";
-    } else if (numberOfSpots > 10) {
-        document.getElementById('lighting-message').textContent = "L'éclairage est peut-être trop fort.";
-    } else {
-        document.getElementById('lighting-message').textContent = "L'éclairage est bien adapté.";
-    }
-});
+function changeLanguage() {
+  const lang = document.getElementById("lang").value;
+  if (lang === "fr") {
+    // Affichage en français
+    document.title = "LightCalc - Calculateur d'éclairage";
+  } else if (lang === "en") {
+    // Affichage en anglais
+    document.title = "LightCalc - Lighting Calculator";
+  } else if (lang === "ar") {
+    // Affichage en arabe
+    document.title = "LightCalc - آلة حاسبة للإضاءة";
+  }
+}
