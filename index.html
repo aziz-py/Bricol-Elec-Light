@@ -1,71 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcul d'Éclairage - Bricol-Elec Services</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LightCalc - Calculateur d'éclairage</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="container">
-        <header>
-            <h1>Calculateur d'Éclairage</h1>
-            <p>Par Aziz Touil - Bricol-Elec Services</p>
-        </header>
-
-        <main>
-            <form id="lighting-form">
-                <label for="room">Sélectionner la pièce :</label>
-                <select id="room">
-                    <option value="1">Toilette</option>
-                    <option value="2">Salle de bain</option>
-                    <option value="3">Cuisine</option>
-                    <option value="4">Chambre à coucher</option>
-                    <option value="5">Salon</option>
-                    <option value="6">Salle à manger</option>
-                    <option value="7">Terrasse extérieure</option>
-                    <option value="8">Balcon</option>
-                    <option value="9">Couloir</option>
-                </select>
-
-                <label for="height">Hauteur (m) :</label>
-                <input type="number" id="height" required>
-
-                <label for="width">Largeur (m) :</label>
-                <input type="number" id="width" required>
-
-                <label for="length">Longueur (m) :</label>
-                <input type="number" id="length" required>
-
-                <label for="lighting-type">Type d'éclairage :</label>
-                <select id="lighting-type">
-                    <option value="1.5">Normal</option>
-                    <option value="2.0">Clair</option>
-                    <option value="1.0">Tamisé</option>
-                </select>
-
-                <label for="spot-color">Couleur des spots :</label>
-                <select id="spot-color">
-                    <option value="2700">Blanc chaud</option>
-                    <option value="4000">Blanc neutre</option>
-                    <option value="5000">Blanc froid</option>
-                </select>
-
-                <label for="spot-power">Puissance du spot (W) :</label>
-                <input type="number" id="spot-power" required>
-
-                <button type="submit">Calculer</button>
-            </form>
-
-            <div id="result">
-                <h3>Résultat :</h3>
-                <p id="recommended-spots"></p>
-                <p id="lighting-message"></p>
-            </div>
-        </main>
+  <header>
+    <h1>LightCalc</h1>
+    <div class="language-selector">
+      <label for="lang">Choisissez votre langue : </label>
+      <select id="lang" onchange="changeLanguage()">
+        <option value="fr">Français</option>
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
     </div>
+  </header>
 
-    <script src="script.js"></script>
+  <main>
+    <h2>Calculateur d'éclairage pour votre maison</h2>
+    <form onsubmit="return validateForm()">
+      <label for="hauteur">Hauteur (m) :</label>
+      <input type="number" id="hauteur" name="hauteur" step="any" min="1" required><br>
+
+      <label for="largeur">Largeur (m) :</label>
+      <input type="number" id="largeur" name="largeur" step="any" min="1" required><br>
+
+      <label for="longueur">Longueur (m) :</label>
+      <input type="number" id="longueur" name="longueur" step="any" min="1" required><br>
+
+      <label for="piece">Sélectionner la pièce :</label>
+      <select id="piece" name="piece" required>
+        <option value="Salon">Salon</option>
+        <option value="Chambre">Chambre</option>
+        <option value="Salle de bain">Salle de bain</option>
+        <option value="Cuisine">Cuisine</option>
+        <option value="Chambre de dressing">Chambre de dressing</option>
+        <option value="Couloir">Couloir</option>
+        <option value="Balcon">Balcon</option>
+      </select><br>
+
+      <label for="puissance">Puissance des spots (W) :</label>
+      <input type="number" id="puissance" name="puissance" step="any"><br>
+
+      <button type="submit">Calculer</button>
+    </form>
+
+    <div id="resultat"></div>
+  </main>
+
+  <footer>
+    <p>Créé par Aziz Touil, Bricol-Elec Services</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
