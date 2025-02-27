@@ -61,3 +61,66 @@
     <script src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightCalc - Bricol-Elec Services</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>LightCalc - Bricol-Elec Services</h1>
+        <div class="language-selector">
+            <select id="language" onchange="changeLanguage()">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+    </div>
+
+    <form id="calculator">
+        <label for="room">Choisissez la pièce :</label>
+        <select id="room">
+            <option value="chambre">Chambre à coucher</option>
+            <option value="sallebain">Salle de bain</option>
+            <option value="salon">Salon</option>
+            <option value="cuisine">Cuisine</option>
+            <option value="dressing">Chambre de dressing</option>
+            <option value="couloir">Couloir</option>
+            <option value="balcon">Balcon</option>
+        </select>
+
+        <label for="height">Hauteur (m) :</label>
+        <input type="number" id="height" required>
+
+        <label for="width">Largeur (m) :</label>
+        <input type="number" id="width" required>
+
+        <label for="length">Longueur (m) :</label>
+        <input type="number" id="length" required>
+
+        <label for="spot-power">Puissance des spots (W) :</label>
+        <input type="number" id="spot-power">
+
+        <label for="lighting-type">Type d'éclairage :</label>
+        <select id="lighting-type">
+            <option value="normal">Normal</option>
+            <option value="clair">Clair</option>
+            <option value="tamise">Tamisé</option>
+        </select>
+
+        <button type="button" onclick="calculate()">Calculer</button>
+    </form>
+
+    <div id="results">
+        <p id="surface"></p>
+        <p id="number-of-spots"></p>
+        <p id="recommended-power"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
