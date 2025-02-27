@@ -3,53 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LightCalc - Bricol-Elec Services</title>
+    <title>Calcul d'Éclairage - Bricol-Elec Services</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-    <h1>LightCalc</h1>
-    <p>Bricol-Elec Services</p>
-    <select id="language" onchange="changeLanguage()">
-        <option value="fr">Français</option>
-        <option value="en">English</option>
-        <option value="ar">العربية</option>
-    </select>
-</header>
 
-<section>
-    <form onsubmit="calculate(event)">
-        <label for="room">Pièce :</label>
-        <select id="room">
-            <option value="chambre">Chambre</option>
-            <option value="salon">Salon</option>
-            <option value="cuisine">Cuisine</option>
-            <option value="salle_bain">Salle de Bain</option>
-            <option value="couloir">Couloir</option>
-            <option value="balcon">Balcon</option>
-        </select>
+    <div class="container">
+        <header>
+            <h1>Calculateur d'Éclairage</h1>
+            <p>Par Aziz Touil - Bricol-Elec Services</p>
+        </header>
 
-        <label for="length">Longueur (m) :</label>
-        <input type="number" id="length" min="0.1" step="0.1" required>
-        
-        <label for="width">Largeur (m) :</label>
-        <input type="number" id="width" min="0.1" step="0.1" required>
+        <main>
+            <form id="lighting-form">
+                <label for="room">Sélectionner la pièce :</label>
+                <select id="room">
+                    <option value="1">Toilette</option>
+                    <option value="2">Salle de bain</option>
+                    <option value="3">Cuisine</option>
+                    <option value="4">Chambre à coucher</option>
+                    <option value="5">Salon</option>
+                    <option value="6">Salle à manger</option>
+                    <option value="7">Terrasse extérieure</option>
+                    <option value="8">Balcon</option>
+                    <option value="9">Couloir</option>
+                </select>
 
-        <label for="color">Couleur des Spots :</label>
-        <select id="color">
-            <option value="chaud">Blanc Chaud</option>
-            <option value="neutre">Blanc Neutre</option>
-            <option value="froid">Blanc Froid</option>
-        </select>
+                <label for="height">Hauteur (m) :</label>
+                <input type="number" id="height" required>
 
-        <label for="power">Puissance (W) (Facultatif) :</label>
-        <input type="number" id="power" min="1" placeholder="10">
+                <label for="width">Largeur (m) :</label>
+                <input type="number" id="width" required>
 
-        <button type="submit">Calculer</button>
-    </form>
-</section>
+                <label for="length">Longueur (m) :</label>
+                <input type="number" id="length" required>
 
-<div id="results"></div>
-<script src="script.js"></script>
+                <label for="lighting-type">Type d'éclairage :</label>
+                <select id="lighting-type">
+                    <option value="1.5">Normal</option>
+                    <option value="2.0">Clair</option>
+                    <option value="1.0">Tamisé</option>
+                </select>
+
+                <label for="spot-color">Couleur des spots :</label>
+                <select id="spot-color">
+                    <option value="2700">Blanc chaud</option>
+                    <option value="4000">Blanc neutre</option>
+                    <option value="5000">Blanc froid</option>
+                </select>
+
+                <label for="spot-power">Puissance du spot (W) :</label>
+                <input type="number" id="spot-power" required>
+
+                <button type="submit">Calculer</button>
+            </form>
+
+            <div id="result">
+                <h3>Résultat :</h3>
+                <p id="recommended-spots"></p>
+                <p id="lighting-message"></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
