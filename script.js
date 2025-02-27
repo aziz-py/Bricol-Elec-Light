@@ -1,50 +1,56 @@
-const factors = {
-    chambre: 15,
-    sallebain: 20,
-    salon: 25,
-    cuisine: 30,
-    dressing: 10,
-    couloir: 10,
-    balcon: 15
-};
+document.getElementById('calc-form').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-function calculate() {
-    let room = document.getElementById("room").value;
-    let height = parseFloat(document.getElementById("height").value);
-    let width = parseFloat(document.getElementById("width").value);
-    let length = parseFloat(document.getElementById("length").value);
-    let spotPower = parseFloat(document.getElementById("spot-power").value);
-    let lightingType = document.getElementById("lighting-type").value;
+  // Récupérer les valeurs du formulaire
+  const length = parseFloat(document.getElementById('length').value);
+  const width = parseFloat(document.getElementById('width').value);
+  const height = parseFloat(document.getElementById('height').value);
+  const room = document.getElementById('room').value;
+  const spotColor = document.getElementById('spot-color').value;
+  const spotPower = parseFloat(document.getElementById('spot-power').value) || 10; // 10W par défaut
 
-    // Calcul de la surface
-    let surface = (width * length).toFixed(2);
-    document.getElementById("surface").innerText = `Surface: ${surface} m²`;
+  // Vérifier si les dimensions sont valides
+  if (length <= 0 || width <= 0 || height <= 0) {
+    alert('Les dimensions doivent être supérieures à 1m.');
+    return;
+  }
 
-    // Calcul des lumens requis
-    let factor = factors[room] || 15;  // Valeur par défaut si la pièce est non définie
-    let lumensRequired = surface * factor;
+  // Calculer la surface
+  const surface = length * width;
 
-    // Si l'utilisateur n'a pas entré de puissance de spot
-    if (!spotPower) {
-        spotPower = 10;  // Puissance par défaut
-        document.getElementById("recommended-power").innerText = `Puissance recommandée : ${spotPower} W`;
-    }
+  // Déterminer le facteur d'éclairage en fonction de la pièce
+  const lightingFactors = {
+    chambre: 12,
+    'salle-de-bain': 15,
+    salon: 10,
+    cuisine: 15,
+    dressing: 12,
+    couloir: 8,
+    balcon: 8,
+  };
 
-    // Calcul du nombre de spots
-    let efficiency = 80;  // Efficacité lumineuse standard
-    let numberOfSpots = Math.ceil(lumensRequired / (spotPower * efficiency));
+  const lightingFactor = lightingFactors[room];
 
-    document.getElementById("number-of-spots").innerText = `Nombre de spots recommandés : ${numberOfSpots}`;
-}
+  // Calcul des lumens requis
+  const lumensRequired = surface * lightingFactor;
 
-function changeLanguage() {
-    let language = document.getElementById("language").value;
+  // Efficacité lumineuse basée sur la couleur du spot
+  const spotEfficiency = {
+    'warm-white': 80,
+    'neutral-white': 90,
+    'cool-white': 100,
+  };
 
-    if (language === "fr") {
-        document.title = "LightCalc - Bricol-Elec Services";
-    } else if (language === "en") {
-        document.title = "LightCalc - Bricol-Elec Services";
-    } else if (language === "ar") {
-        document.title = "لايت كالك - خدمات بريكول إليك";
-    }
-}
+  const efficiency = spotEfficiency[spotColor];
+
+  // Calcul du nombre de spots
+  const numberOfSpots = Math.ceil(lumensRequired / (spotPower * efficiency));
+
+  // Calcul de la puissance recommandée si l'utilisateur n'a pas fourni de valeur
+  const recommendedPower = spotPower || 10;
+
+  // Affichage des résultats
+  document.getElementById('surface').textContent = `Surface de la pièce : ${surface.toFixed(2)} m²`;
+  document.getElementById('number-of-spots').textContent = `Nombre de spots recommandés : ${numberOfSpots}`;
+  document.getElementById('recommended-power').textContent = `Puissance recommandée : ${recommendedPower} W`;
+});
